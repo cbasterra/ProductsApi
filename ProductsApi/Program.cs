@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using ProductsApi.Data;
 using ProductsApi.Repositories.Implementations;
 using ProductsApi.Repositories.Interfaces;
 using ProductsApi.Services.Implementations;
@@ -15,6 +17,8 @@ namespace ProductsApi
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<ProductsApiContext>(dbContextOptions => dbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:ProductsApiDBConnectionString"]));
 
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IProductService, ProductService>();
